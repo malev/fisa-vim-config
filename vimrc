@@ -202,6 +202,7 @@ inoremap <expr> }  strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}
 let g:tabman_toggle = 'tl'
 let g:tabman_focus  = 'tf'
 
+syntax enable
 " use 256 colors when possible
 if &term =~? 'mlterm\|xterm\|screen-256'
 	let &t_Co = 256
