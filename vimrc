@@ -24,20 +24,14 @@ Bundle 'gmarik/vundle'
 
 " Bundles from GitHub repos:
 
-" Python and PHP Debugger
-Bundle 'jabapyth/vim-debug'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
 " Code commenter
 Bundle 'scrooloose/nerdcommenter'
-" Search and read python documentation
-Bundle 'fs111/pydoc.vim'
 " Class/module browser
 Bundle 'majutsushi/tagbar'
 " Code and files fuzzy finder
 Bundle 'kien/ctrlp.vim'
-" PEP8 and python-flakes checker
-Bundle 'nvie/vim-flake8'
 " Zen coding
 Bundle 'mattn/zencoding-vim'
 " Git integration
@@ -57,14 +51,15 @@ Bundle 'Conque-Shell'
 Bundle 'AutoComplPop'
 " Pending tasks list
 Bundle 'TaskList.vim'
-" Python code checker
-Bundle 'pyflakes.vim'
 " Search results counter
 Bundle 'IndexedSearch'
 " XML/HTML tags navigation
 Bundle 'matchit.zip'
 " Gvim colorscheme
 Bundle 'Wombat'
+" Syntastic is a syntax checking plugin that runs files through external
+" syntax checkers and displays any resulting errors to the user.
+Bundle 'Syntastic'
 
 " Installing plugins the first time
 if iCanHazVundle == 0
@@ -79,14 +74,15 @@ filetype indent on
 
 " tabs and spaces handling
 set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " tablength exceptions
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
 " always show status bar
 set ls=2
@@ -107,12 +103,15 @@ let g:tagbar_autofocus = 1
 
 " NERDTree (better file browser) toggle
 map <F3> :NERDTreeToggle<CR>
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
+            \ '\.o$', '\.so$', '\.egg$', '^\.git$', '\.log$' ] 
 
 " tab navigation
 map tn :tabn<CR>
 map tp :tabp<CR>
 map tm :tabm<CR>
 map tt :tabnew 
+map <c-t> <esc>:tabnew<cr>
 
 " automatically close autocompletition window
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -123,10 +122,6 @@ imap <C-J> <C-X><C-O>
 
 " show pending tasks list
 map <F2> :TaskList<CR>
-
-" removes trailing spaces of python files
-" (and restores cursor position)
-autocmd BufWritePre *.py mark z | %s/ *$//e | 'z
 
 " save as sudo
 ca w!! w !sudo tee "%"
@@ -167,16 +162,6 @@ let OmniCpp_MayCompleteScope = 0
 " change this behaviour with the OmniCpp_SelectFirstItem option.
 let OmniCpp_SelectFirstItem = 0
 
-" debugger keyboard shortcuts
-map <F5> :Dbg over<CR>
-map <F6> :Dbg into<CR>
-map <F7> :Dbg out<CR>
-map <F8> :Dbg here<CR>
-map <F9> :Dbg break<CR>
-map <F10> :Dbg watch<CR>
-map <F11> :Dbg down<CR>
-map <F12> :Dbg up<CR>
-
 " CtrlP (new fuzzy finder)
 let g:ctrlp_map = ',e'
 nmap ,g :CtrlPBufTag<CR>
@@ -202,14 +187,6 @@ nmap ,R :RecurGrep
 nmap ,r :RecurGrepFast 
 nmap ,wR :RecurGrep <cword><CR>
 nmap ,wr :RecurGrepFast <cword><CR>
-
-" run pep8+pyflakes validator
-autocmd FileType python map <buffer> ,8 :call Flake8()<CR>
-" rules to ignore (example: "E501,W293")
-let g:flake8_ignore=""
-
-" don't let pyflakes allways override the quickfix list
-let g:pyflakes_use_quickfix = 0
 
 " autoclose (
 inoremap        (  ()<Left>
