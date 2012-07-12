@@ -26,8 +26,6 @@ Bundle 'gmarik/vundle'
 
 " Better file browser
 Bundle 'scrooloose/nerdtree'
-" Code commenter
-Bundle 'scrooloose/nerdcommenter'
 " Class/module browser
 Bundle 'majutsushi/tagbar'
 " Code and files fuzzy finder
@@ -49,6 +47,8 @@ Bundle 'fisadev/fisa-vim-colorscheme'
 Bundle 'Conque-Shell'
 " Autocompletition
 Bundle 'AutoComplPop'
+" Code commenter
+Bundle 'comments.vim'
 " Pending tasks list
 Bundle 'TaskList.vim'
 " Search results counter
